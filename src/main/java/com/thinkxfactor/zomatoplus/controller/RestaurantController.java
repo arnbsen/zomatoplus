@@ -86,9 +86,19 @@ public class RestaurantController {
 		return (List<Restaurant>)restaurantRepository.findAll();
 	}
 	
+	@GetMapping("/getByID")
+	public Restaurant getById(@RequestParam String id) {
+		return restaurantRepository.findById(Long.parseLong(id));
+	}
+	
+	@GetMapping("/getByName")
+	public Restaurant getByName(@RequestParam String id) {
+		return restaurantRepository.findByName(id);
+	}
+	
 	@PostMapping("/addItem")
-	public String addItem(@RequestBody Item it,@RequestParam String id) {
-		if(restaurantRepository.existsById(Long.parseLong(id))) {
+	public String addItem(@RequestBody Item it) {
+		if(restaurantRepository.existsById(it.getRestaurantId())) {
 			itemRepository.save(it);
 			return "Entry successful";
 		}else {
@@ -97,8 +107,19 @@ public class RestaurantController {
 	}
 	
 	@GetMapping("/listItems")
-	public Optional<Item> listItemsById(@RequestParam String id){
+	public List<Item> listItemsByResId(@RequestParam String id){
+		return itemRepository.findAllByRestaurantId(Long.parseLong(id));
+	}
+	
+	@GetMapping("/ItemsById")
+	public Item listItemsById(@RequestParam String id){
 		return itemRepository.findById(Long.parseLong(id));
 	}
+	
+	@GetMapping("/ItemsByResId")
+	public Item listItemsById(@RequestParam String[] arg){
+		return itemRepository.findByNameAndRestaurantId(arg[0], Long.parseLong(arg[1]));
+	}
+	
 	
 }

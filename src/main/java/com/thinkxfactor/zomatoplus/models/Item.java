@@ -16,7 +16,7 @@ public class Item implements Serializable{
 	private long id;
 	
 	@Column(name="restaurant_id")
-	private long restaurant_id;
+	private long restaurantId;
 	
 	@Column(name="name")
 	private String name;
@@ -32,7 +32,7 @@ public class Item implements Serializable{
 	public Item(long id, long restaurant_id, String name, double price, String description) {
 		super();
 		this.id = id;
-		this.restaurant_id = restaurant_id;
+		this.restaurantId = restaurant_id;
 		this.name = name;
 		this.price = price;
 		this.description = description;
@@ -46,12 +46,12 @@ public class Item implements Serializable{
 		this.id = id;
 	}
 
-	public long getRestaurant_id() {
-		return restaurant_id;
+	public long getRestaurantId() {
+		return restaurantId;
 	}
 
-	public void setRestaurant_id(long restaurant_id) {
-		this.restaurant_id = restaurant_id;
+	public void setRestaurantId(long restaurant_id) {
+		this.restaurantId = restaurant_id;
 	}
 
 	public String getName() {
