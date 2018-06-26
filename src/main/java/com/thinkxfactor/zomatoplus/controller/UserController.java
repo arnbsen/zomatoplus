@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,19 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thinkxfactor.zomatoplus.models.Item;
 import com.thinkxfactor.zomatoplus.models.User;
+import com.thinkxfactor.zomatoplus.repository.UserRepository;
 
 import net.bytebuddy.dynamic.TypeResolutionStrategy.Passive;
-
+ 
+class Login{
+	String name;
+	String pwd;
+}
 
 @RestController //Because we are using RESTful services. Used to create Controllers
 @RequestMapping("/user") // maps address of the controller to access. Context path. Class level mapping
 public class UserController {
 
-	List<User> l1 = new ArrayList<User>();
-	Map<String, String> master = new Hashtable<>();
-	
 	/*Only sending data from the server to browser
+	 
+	//Old Version of User Controller
+	
+	List<User> l1 = new ArrayList<User>();
+	Map<Long, String> master = new Hashtable<>();
 	@GetMapping("/login") // GET request. GET mapping
 	public User userLogin() {
 		User u1 = new User();
@@ -58,28 +67,6 @@ public class UserController {
 			return u1;
 		}
 	}
-	*/
-	
-	
-	//Method to return all the names for a user
-	//All Collection Interface subclasses and interfaces return JSON Array Objects
-	
-	@GetMapping("/all")
-	public List<User> userList() {
-		return l1;
-	}
-	
-	@PostMapping("/create")
-	public Object createUser(@RequestBody User user) {
-		System.out.println(user.toString());
-		if(master.containsKey(user.getUserName())) {
-			return "User already exist";
-		}else {
-			master.put(user.getUserName(), user.getPassword());
-			l1.add(user);
-			return "User Added";
-		}
-	}
 	
 	@PostMapping("/login")
 	public Object userLogin(@RequestParam String username, String pwd) {
@@ -90,10 +77,10 @@ public class UserController {
 		}else if(username.isEmpty()) {
 			return (String)"Invalid Username";
 		}else {
-			if(master.containsKey(username)) {
-				System.out.println(master.get(username));
+			if(master.containsKey(Long.parseLong(username))) {
+				System.out.println(master.get(Long.parseLong(username)));
 				System.out.println(pwd);
-				if(master.get(username).equals(pwd)) {
+				if(master.get(Long.parseLong(username)).equals(pwd)) {
 					return "Successful Login";
 				}else {
 					return "Password/Username doesn't match";
@@ -104,4 +91,53 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/all")
+	public List<User> userList() {
+		return l1;
+	}
+	
+	@PostMapping("/create")
+	public Object createUser(@RequestBody User user) {
+		System.out.println(user.toString());
+		if(master.containsKey(user.getId())) {
+			return "User already exist";
+		}else {
+			master.put(user.getId(), user.getPassword());
+			l1.add(user);
+			return "User Added";
+		}
+	} 
+	*/
+	
+	
+	//Method to return all the names for a user
+	//All Collection Interface subclasses and interfaces return JSON Array Objects
+	
+	
+	@Autowired //Spring will manage all the objects. Achieving IOC By Dependency Injection
+	private UserRepository userRepository;
+	
+	@PostMapping("/add")
+	public User addUser(@RequestBody User usr) {
+		User persistedUser = userRepository.save(usr);
+		return persistedUser;
+	}
+	
+	@GetMapping("/getAll")
+	public List<User> getAll(){
+		List<User> listOfUsers = userRepository.findAll();
+		return listOfUsers;
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestBody Login l1) {
+		if(userRepository.findByNameAndPassword(l1.name, l1.pwd) != null) {
+			return "Login Sucessfull";
+		}else {
+			return "Login Failed";
+		}
+	}
+	
+	
+
 }
