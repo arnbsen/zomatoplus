@@ -1,6 +1,6 @@
 #DATABASE CONFIG#
 spring.jpa.hibernate.ddl-auto=update
-spring.datasource.url=jdbc:h2:mem:zomatoplus
+spring.datasource.url=jdbc:h2:file:zomatoplus
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
 spring.datasource.password=

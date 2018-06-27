@@ -96,6 +96,16 @@ public class RestaurantController {
 		return restaurantRepository.findByName(id);
 	}
 	
+	@GetMapping("/getByCity")
+	public List<Restaurant> getAllByCity(@RequestParam String name){
+		return restaurantRepository.findAllByCity(name);
+	}
+	
+	@GetMapping("/getByCityAndName")
+	public Restaurant getByCityAndName(@RequestParam String[] s) {
+		return restaurantRepository.findAllByCityAndName(s[0], s[1]);
+	}
+	
 	@PostMapping("/addItem")
 	public String addItem(@RequestBody Item it) {
 		if(restaurantRepository.existsById(it.getRestaurantId())) {
