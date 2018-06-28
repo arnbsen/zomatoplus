@@ -1,0 +1,18 @@
+<div class="container well" style="width: 400px">
+        <form nonvalidate>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input id="username" type="text" class="form-control" name="email" placeholder="User Name" ng-model="user.name">
+            </div>
+            <div class="input-group" style="padding-top: 10px">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-model="user.password">
+            </div>
+            <div style="padding-top: 10px;">
+            <button ng-click="loginUser()" class="btn btn-success" style="width: 170px">Login</button>
+            <tr>
+            <button ng-click="" class="btn btn-warning" style="width: 170px; margin-left: 15px;">Cancel</button>
+            </div>
+        </form>
+        <p ng-bind="message" style="margin-top: 15px"></p>
+</div>

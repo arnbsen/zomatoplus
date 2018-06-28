@@ -19,7 +19,10 @@ import com.thinkxfactor.zomatoplus.models.User;
 import com.thinkxfactor.zomatoplus.repository.UserRepository;
 
 import net.bytebuddy.dynamic.TypeResolutionStrategy.Passive;
- 
+class LoginData{
+	String name;
+	String pwd;
+}
 
 
 @RestController //Because we are using RESTful services. Used to create Controllers
@@ -127,11 +130,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public String login(@RequestBody String[] l1) {
-		if(userRepository.findByNameAndPassword(l1[0], l1[1]) != null) {
-			return "Login Sucessful";
+	public User login(@RequestBody User u) {
+		if(userRepository.findByNameAndPassword(u.getName(), u.getPassword()) != null) {
+			return u;
 		}else {
-			return "Login Failed";
+			return null;
 		}
 	}
 	

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html ng-app="app" ng-init="lg='glyphicon glyphicon-log-in';lgText='Login'">
 
 <head>
 <link data-require="bootstrap@*" data-semver="3.3.5" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
@@ -12,12 +12,20 @@
 
 <body id="body" class="container-fluid">
 	<br />
-	<ul class="nav nav-tabs">
-		<li data-toggle="tab"><a href="#/home">Home</a></li>
-		<li><a href="#/restaurants" data-toggle="tab">Restaurants</a></li>
-		<li><a href="#/items" data-toggle="tab">Items</a></li>
-	</ul> 
-
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<ul class="nav navbar-nav">
+				<li data-toggle="tab"><a href="#/home">Home</a></li>
+				<li><a href="#/restaurants" data-toggle="tab">Restaurants</a></li>
+				<li><a href="#/items" data-toggle="tab">Search Items</a></li>
+			</ul> 
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="#/login" data-toggle="tab"><span class={{lg}}></span> {{lgText}}</a></li>
+		  </ul>
+		</div>
+	</nav>
+	<div id="centered"><h4>{{lgName}}</h4></div>
 	<div id="centered" ng-view></div>
 
 </body>
