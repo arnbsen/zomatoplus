@@ -1,9 +1,12 @@
-<div class="container well" ng-init="init()">
+<img src="bg5.jpeg" style="width: 100%; position: fixed; z-index: -1;" class="img-responsive">
+<div class="container">
+<div class="container well" ng-init="init()" style="top: 40px; position: relative; height: 650px; opacity: 0.9">
    <h3>{{lgName}}</h3>
-   <div>
-       <h4>Search By Item ID</h4>
+   <div class="row">
+   <div class="col-lg-4">
+       <h4>Search By Resturant ID</h4>
        <form invalidate>
-        <div class="input-group" style="width: 400px">
+        <div class="input-group">
           <input type="text" class="form-control" placeholder="Search" name="search" ng-model="s1">
           <div class="input-group-btn">
             <button class="btn btn-default" ng-click="item1itr()"><i class="glyphicon glyphicon-search"></i></button>
@@ -11,7 +14,32 @@
         </div>
         </form>
    </div>
+   <div class="col-lg-4">
+        <h4>Search By Item ID</h4>
+        <form invalidate>
+         <div class="input-group">
+           <input type="text" class="form-control" placeholder="Search" name="search" ng-model="s2">
+           <div class="input-group-btn">
+             <button class="btn btn-default" ng-click="item2itr()"><i class="glyphicon glyphicon-search"></i></button>
+           </div>
+         </div>
+         </form>
+    </div>
+    <div class="col-lg-4">
+            <h4>Search By Item Name</h4>
+            <form invalidate>
+             <div class="input-group">
+               <input type="text" class="form-control" placeholder="Search" name="search" ng-model="s3">
+               <div class="input-group-btn">
+                 <button class="btn btn-default" ng-click="item3itr()"><i class="glyphicon glyphicon-search"></i></button>
+               </div>
+             </div>
+             </form>
+        </div>
+</div>
+   <p>{{data}}</p>
    <div class="clearfix" style="padding-top: 10px; padding-bottom: 10px;">
+  
         <table class="table table-strip table-hover" style="display: {{visb1}};">
     		
             <tr style="background-color: #8FBC8F">
@@ -21,70 +49,13 @@
                 <td><b>Price</b></td>
     
             </tr>
-            <tr>
-                <td>{{item.restaurantId}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.description}}</td>
-                <td>{{item1.price}}</td>
+            <tr ng-repeat="t in test">
+                <td>{{t.restaurantId}}</td>
+                <td>{{t.name}}</td>
+                <td>{{t.description}}</td>
+                <td>{{t.price}}</td>
             </tr>
         </table>
     </div> 
-   <div>
-        <h4>Search By City</h4>
-        <form invalidate>
-         <div class="input-group" style="width: 400px">
-           <input type="text" class="form-control" placeholder="Search" name="search" ng-model="s2">
-           <div class="input-group-btn">
-             <button class="btn btn-default" ng-click="item2itr()"><i class="glyphicon glyphicon-search"></i></button>
-           </div>
-         </div>
-         </form>
-    </div> 
-    <div class="clearfix" style="padding-top: 10px; padding-bottom: 10px;">
-        <table class="table table-strip table-hover" style="display: {{visb2}};">
-    
-                <tr style="background-color: #8FBC8F">
-                        <td><b>Resturant ID</b></td>
-                        <td><b>Name</b></td>
-                        <td><b>Description</b></td>
-                        <td><b>Price</b></td>
-            
-                    </tr>
-                    <tr ng-repeat="item in items2">
-                        <td>{{item.restaurantId}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.description}}</td>
-                        <td>{{item.price}}</td>
-                    </tr>
-        </table>
-        </div>
-    <div>
-            <h4>Search By Name</h4>
-            <form invalidate>
-             <div class="input-group" style="width: 400px">
-               <input type="text" class="form-control" placeholder="Search" name="search" ng-bind="s3">
-               <div class="input-group-btn">
-                 <button class="btn btn-default" ng-click="item3itr()"><i class="glyphicon glyphicon-search"></i></button>
-               </div>
-             </div>
-             </form>
-        </div> 
-        <div class="clearfix" style="padding-top: 10px; padding-bottom: 10px;">
-        <table class="table table-strip table-hover" style="display: {{visb3}};">
-    
-                <tr style="background-color: #8FBC8F">
-                        <td><b>Resturant ID</b></td>
-                        <td><b>Name</b></td>
-                        <td><b>Description</b></td>
-                        <td><b>Price</b></td>
-            
-                    </tr>
-                    <tr ng-repeat="item in item3">
-                        <td>{{item.restaurantId}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.description}}</td>
-                        <td>{{item.price}}</td>
-                    </tr>
-        </table>
-        </div>
+</div>
 </div>

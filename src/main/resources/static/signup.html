@@ -1,0 +1,40 @@
+<img src="bg1.jpg" style="width: 100%; position: fixed; z-index: -1;" class="img-responsive">
+<div class="container-fluid">
+<div class="well container" style="width: 600px; margin-top: 70px; opacity: 0.9;" ng-init="user.type='usr'">
+    <form novalidate>
+    	<h2 align = "center">Your Bio. Please</h2>
+        <div class="form-group" style="margin-top: 30px;opacity: 1;">
+            <label class="control-label" style="font-size: 17px;">Create a User Name</label>
+            <div class="control-label">
+                    <input type="text" class="form-control" ng-model="user.name">
+            </div>
+            <label class="control-label" style="font-size: 17px; margin-top: 5px;">Create a Password</label>
+            <div class="control-label">
+                    <input type="password" class="form-control" ng-model="user.password">
+            </div>
+            <label class="control-label" style="font-size: 17px; margin-top: 5px;">Address</label>
+            <div class="control-label">
+                    <input type="text" class="form-control" ng-model="user.address">
+            </div>
+            <label class="control-label" style="font-size: 17px; margin-top: 5px;">Landmark</label>
+            <div class="control-label">
+                    <input type="text" class="form-control" ng-model="user.landmark">
+            </div>
+            <label class="control-label" style="font-size: 17px; margin-top: 5px;">Pin Code</label>
+            <div class="control-label">
+                    <input type="number" class="form-control" ng-model="user.pincode">
+            </div>
+            <label class="control-label" style="font-size: 17px; margin-top: 5px;">Mobile No.</label>
+            <div class="control-label">
+                    <input type="number" class="form-control" ng-model="user.mobile">
+            </div>
+        </div>
+    </form>
+    <button ng-click="signUp()" class="btn btn-success" style="width: 560px; margin-top: 10px;">Sign Me Up</button>
+    <div style="margin-top: 10px;">{{message}}</div>
+    <div style="margin-top: 15px;">
+        <button ng-click="reset()" class="btn btn-warning" style="width: 270px;">Reset</button>
+        <button ng-click="cancel()" class="btn btn-danger" style="width: 270px; margin-left: 15px;">Cancel</button>
+    </div>
+</div>
+</div>

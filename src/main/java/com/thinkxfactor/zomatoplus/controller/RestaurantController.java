@@ -130,6 +130,10 @@ public class RestaurantController {
 	public Item listItemsById(@RequestParam String[] arg){
 		return itemRepository.findByNameAndRestaurantId(arg[0], Long.parseLong(arg[1]));
 	}
+	@GetMapping("/ItemsByName")
+	public List<Item> listItemsByName(@RequestParam String name){
+		return itemRepository.findAllByName(name);
+	}
 	
 	
 }

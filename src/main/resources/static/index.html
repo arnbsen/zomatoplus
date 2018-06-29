@@ -12,7 +12,11 @@
 
 <body id="body" class="container-fluid">
 	<br />
-	<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse" style="float: left; width: 100%;position: fixed;top: 0; left: 0; font-size: 20px;">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<img src="logo2.png" width="120px" height="50px">
+		</div>
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
 				<li data-toggle="tab"><a href="#/home">Home</a></li>
@@ -20,13 +24,14 @@
 				<li><a href="#/items" data-toggle="tab">Search Items</a></li>
 			</ul> 
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="#/signup" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 			<li><a href="#/login" data-toggle="tab"><span class={{lg}}></span> {{lgText}}</a></li>
 		  </ul>
 		</div>
+		</div>
 	</nav>
-	<div id="centered"><h4>{{lgName}}</h4></div>
-	<div id="centered" ng-view></div>
+	<div id="centered" class="row"><h4>{{lgName}}</h4></div>
+	<div id="centered" ng-view class="row"></div>
 
 </body>
 
