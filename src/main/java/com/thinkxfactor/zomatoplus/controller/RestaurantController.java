@@ -76,10 +76,6 @@ public class RestaurantController {
 	private ItemRepository itemRepository;
 	
 	
-	@PostMapping("/add")
-	public Restaurant add(@RequestBody Restaurant rm) {
-		return restaurantRepository.save(rm);
-	}
 	
 	@GetMapping("/getAll")
 	public List<Restaurant> getAll() {
@@ -106,15 +102,6 @@ public class RestaurantController {
 		return restaurantRepository.findAllByCityAndName(s[0], s[1]);
 	}
 	
-	@PostMapping("/addItem")
-	public String addItem(@RequestBody Item it) {
-		if(restaurantRepository.existsById(it.getRestaurantId())) {
-			itemRepository.save(it);
-			return "Entry successful";
-		}else {
-			return "Resturant doesn't exist";
-		}
-	}
 	
 	@GetMapping("/listItems")
 	public List<Item> listItemsByResId(@RequestParam String id){
@@ -132,6 +119,7 @@ public class RestaurantController {
 	}
 	@GetMapping("/ItemsByName")
 	public List<Item> listItemsByName(@RequestParam String name){
+		
 		return itemRepository.findAllByName(name);
 	}
 	

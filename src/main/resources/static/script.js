@@ -25,6 +25,10 @@ app.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'signup.html',
 		controller : 'signupCtrl'
 	});
+	$routeProvider.when('/admin', {
+		templateUrl : 'admin.html',
+		controller : 'adminCtrl'
+	});
 	$routeProvider.otherwise({
 		redirectTo : '/home'
 	});
@@ -52,7 +56,7 @@ app.controller("restaurantCtrl", function($scope, $http) {
 			method : 'GET',
 			url : 'http://localhost:9080/restaurant/getAll'
 		}).success(function(data, status) {
-			console.log(data);
+		
 			$scope.status = status;
 			$scope.restaurants = data;
 		}).error(function(data, status) {
@@ -62,12 +66,12 @@ app.controller("restaurantCtrl", function($scope, $http) {
 	};
 	
 	$scope.resturantByName = function(){
-		console.log($scope.r2);
+		
 		$http({
 			method : 'GET',
 			url : 'http://localhost:9080/restaurant/getByName?id=' + $scope.r2
 		}).success(function(data, status) {
-			console.log(data);
+			
 			$scope.status = status;
 			$scope.disp = 'block';
 			$scope.restaurants = [data];
@@ -78,32 +82,15 @@ app.controller("restaurantCtrl", function($scope, $http) {
 	};
 	
 	$scope.resturantByCity = function(){
-		console.log($scope.r1);
+		
 		$http({
 			method : 'GET',
 			url : 'http://localhost:9080/restaurant/getByCity?name=' + $scope.r1
 		}).success(function(data, status) {
-			console.log(data);
+			
 			$scope.status = status;
 			$scope.disp = 'block';
 			$scope.restaurants = data;
-		}).error(function(data, status) {
-			$scope.status = status;
-			$scope.data = "Request failed";
-		});
-	};
-	
-	$scope.saveRestaurant = function() {
-
-		$http({
-			method : 'POST',
-			url : 'http://localhost:9080/restaurant/add',
-			headers: { 'Content-Type': 'application/json' },
-			data:$scope.restaurant
-		}).success(function(data, status) {
-			console.log(data);
-			$scope.fetchRestaurant();
-			$scope.restaurants= data;
 		}).error(function(data, status) {
 			$scope.status = status;
 			$scope.data = "Request failed";
@@ -124,12 +111,12 @@ app.controller("itemsCtrl", function($scope, $http) {
 		
 	};
 	$scope.item1itr = function(){
-		console.log($scope.s1);
+		
 		$http({
 			method : 'GET',
 			url : 'http://localhost:9080/restaurant/listItems?id=' + $scope.s1
 		}).success(function(data, status) {
-			console.log(data);
+			
 			$scope.status = status;
 			$scope.test=data;
 			$scope.visb1='block'
@@ -143,7 +130,7 @@ app.controller("itemsCtrl", function($scope, $http) {
 			method : 'GET',
 			url : 'http://localhost:9080/restaurant/ItemsById?id=' + $scope.s2,
 		}).success(function(data, status) {
-			console.log(data);
+			
 			$scope.status = status;
 			$scope.test = [data];
 			$scope.visb1='inline'
@@ -158,7 +145,7 @@ app.controller("itemsCtrl", function($scope, $http) {
 			url : 'http://localhost:9080/restaurant/ItemsByName?name=' + $scope.s3,
 			data:$scope.s3
 		}).success(function(data, status) {
-			console.log(data);
+			
 			$scope.status = status;
 			$scope.test = data;
 			$scope.visb1='block'
@@ -180,14 +167,18 @@ app.controller("loginCtrl", function($scope, $http){
 			headers: { 'Content-Type': 'application/json' },
 			data:$scope.user
 		}).success(function(data, status) {
-			console.log(data);
+			console.log(data.type);
 			if(data){
+				if(data.type == "admin"){
+					window.location = "/#/admin"
+				}else{
 				$scope.message = "Welcome Back:  " + data.name;
-				console.log($scope.lgText);
+				
 				lgNam =  "Welcome Back: " + data.name;
-				console.log(lgNam);
+				
 				ifLoggedIn = true;
 				window.location = "/#/items"
+				}
 			}else{
 				$scope.message = "Login Failed";
 			}
@@ -205,7 +196,7 @@ app.controller("loginCtrl", function($scope, $http){
  
 app.controller("signupCtrl", function($scope, $http){
 	$scope.signUp = function(){
-		console.log($scope.user);
+		
 		$http({
 			method : 'POST',
 			url : 'http://localhost:9080/user/add',
@@ -227,4 +218,87 @@ app.controller("signupCtrl", function($scope, $http){
 	$scope.cancel = function(){
 		window.location = "/#/home";
 	};
+});
+
+app.controller("adminCtrl", function($scope, $http){
+	
+	$scope.saveRestaurant = function() {
+
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/addRestaurant',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.restaurant
+		}).success(function(data, status) {
+			
+			$scope.saveRestaurantMessage = "Added Restaurant with ID:" + data.id;
+			$scope.restaurants= data;
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.saveRestaurantMessage = "Request failed";
+		});
+	};
+
+	$scope.saveItem = function() {
+		
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080//admin/addItem',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.item
+		}).success(function(data, status) {
+			
+			$scope.saveItemMessage = "Added Item with ID:" + data.id;
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.saveItemMessage = "Request failed";
+		});
+	};
+
+	$scope.deleteRestaurant = function() {
+
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteRestaurant',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.restaurant1
+		}).success(function(data, status) {
+			
+			$scope.deleteRestaurantMessage = "Succesfully deleted";
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.deleteRestaurantMessage = "Request failed";
+		});
+	};
+
+	$scope.deleteItem = function() {
+
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteItem',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.item1
+		}).success(function(data, status) {
+			
+			$scope.deleteItemMessage = "Succesfully deleted";
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.deleteItemMessage = "Request failed";
+		});
+	};
+
+	$scope.deleteUser = function() {
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteUser',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.user1
+		}).success(function(data, status) {
+			$scope.deleteUserMessage = "Succesfully deleted";
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.deleteUserMessage = "Request failed";
+		});
+	};
+
 });

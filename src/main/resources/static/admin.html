@@ -1,0 +1,119 @@
+<div class="container well" style="z-index: 10;margin-top: 40px; position: relative;" ng-init="restaurant.likeCount=0">
+    <h2>Hello Admin</h2>
+    <div class="col-lg-4">
+        <h3>Restauant Operations</h3>
+        <h4>Add</h4>
+        <form novalidate>
+            <table cellpadding="100">
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" ng-model="restaurant.name"></td>
+                </tr>
+    
+                <tr>
+                    <td>Description</td>
+                    <td><input type="text" ng-model="restaurant.description"></td>
+                </tr>
+    
+                <tr>
+                    <td>Contact</td>
+                    <td><input type="text" ng-model="restaurant.contact"></td>
+                </tr>
+    
+                <tr>
+                    <td>Website</td>
+                    <td><input type="text" ng-model="restaurant.website"></td>
+                </tr>
+    
+                <tr>
+                    <td>City</td>
+                    <td><input type="text" ng-model="restaurant.city"></td>
+                </tr>
+    
+                <tr>
+                    <td>Address</td>
+                    <td><input type="text" ng-model="restaurant.address"></td>
+                </tr>
+    
+                <tr>
+                	<td style="width: 100px;"></td>
+                    <td><button ng-click="saveRestaurant()" class="btn btn-success" style="margin-top: 10px;width: 150px;">Save Restauant</button></td>
+                </tr>
+            </table>
+            <p ng-bind="saveRestaurantMessage"></p>
+            <h4>Delete By ID</h4>
+            <form novalidate>
+                    <table cellpadding="100">
+                        <tr>
+                            <td>ID: </td>
+                            <td><input type="number" ng-model="restaurant1.id"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px;"></td>
+                            <td><button ng-click="deleteRestaurant()" class="btn btn-danger" style="margin-top: 10px;width: 150px;">Delete Restauant</button></td>
+                        </tr>
+                    </table>
+            </form>
+            <p ng-bind="deleteRestaurantMessage"></p>
+    </div>
+    <div class="col-lg-4">
+            <h3>Item Operations</h3>
+            <h4>Add</h4>
+            <form novalidate>
+                <table cellpadding="100">
+                    <tr>
+                        <td>Restauant ID</td>
+                        <td><input type="text" ng-model="item.restaurantId"></td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text" ng-model="item.name"></td>
+                    </tr>
+        
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" ng-model="item.description"></td>
+                    </tr>
+                    <tr>
+                        <td>Price</td>
+                        <td><input type="number" ng-model="item.price"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px;"></td>
+                        <td><button ng-click="saveItem()" class="btn btn-success" style="margin-top: 10px;width: 150px;">Save Item</button></td>
+                    </tr>
+                </table>
+                <p ng-bind="saveItemMessage"></p>
+                <h4>Delete By ID</h4>
+                <form novalidate>
+                        <table cellpadding="100">
+                            <tr>
+                                <td>ID: </td>
+                                <td><input type="number" ng-model="item1.id"></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100px;"></td>
+                                <td><button ng-click="deleteItem()" class="btn btn-danger" style="margin-top: 10px;width: 150px;">Delete Item</button></td>
+                            </tr>
+                        </table>
+                </form>
+                <p ng-bind="deleteItemMessage"></p>
+        </div>
+        <div class="col-lg-4">
+                <h3>User Operations</h3>
+                    <h4>Delete By ID</h4>
+                    <form novalidate>
+                            <table cellpadding="100">
+                                <tr>
+                                    <td>ID: </td>
+                                    <td><input type="number" ng-model="user1.id"></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100px;"></td>
+                                    <td><button ng-click="deleteUser()" class="btn btn-danger" style="margin-top: 10px;width: 150px;">Delete User</button></td>
+                                </tr>
+                            </table>
+                    </form>
+                    <p ng-bind="deleteUserMessage"></p>
+            </div>
+</div>

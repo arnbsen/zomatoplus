@@ -19,11 +19,6 @@ import com.thinkxfactor.zomatoplus.models.User;
 import com.thinkxfactor.zomatoplus.repository.UserRepository;
 
 import net.bytebuddy.dynamic.TypeResolutionStrategy.Passive;
-class LoginData{
-	String name;
-	String pwd;
-}
-
 
 @RestController //Because we are using RESTful services. Used to create Controllers
 @RequestMapping("/user") // maps address of the controller to access. Context path. Class level mapping
@@ -132,7 +127,7 @@ public class UserController {
 	@PostMapping("/login")
 	public User login(@RequestBody User u) {
 		if(userRepository.findByNameAndPassword(u.getName(), u.getPassword()) != null) {
-			return u;
+			return userRepository.findByNameAndPassword(u.getName(), u.getPassword());
 		}else {
 			return null;
 		}
