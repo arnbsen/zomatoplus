@@ -82,6 +82,11 @@ public class RestaurantController {
 		return (List<Restaurant>)restaurantRepository.findAll();
 	}
 	
+	@GetMapping("/getAllItems")
+	public List<Item> getAllItems() {
+		return itemRepository.findAll();
+	}
+	
 	@GetMapping("/getByID")
 	public Restaurant getById(@RequestParam String id) {
 		return restaurantRepository.findById(Long.parseLong(id));

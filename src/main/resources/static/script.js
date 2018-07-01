@@ -34,7 +34,7 @@ app.config([ '$routeProvider', function($routeProvider) {
 	});
 } ]);
  
-app.controller("homeCtrl", function($scope, $http) {
+app.controller("homeCtrl", function($rootScope, $scope, $http) {
 	$scope.login = function(){
 		window.location = '/#/login'
 	};
@@ -48,21 +48,6 @@ app.controller("homeCtrl", function($scope, $http) {
 app.controller("restaurantCtrl", function($scope, $http) {
 	$scope.init = function(){
 		$scope.disp = 'none';
-	};
-
-
-	$scope.fetchRestaurant = function() {
-		$http({
-			method : 'GET',
-			url : 'http://localhost:9080/restaurant/getAll'
-		}).success(function(data, status) {
-		
-			$scope.status = status;
-			$scope.restaurants = data;
-		}).error(function(data, status) {
-			$scope.status = status;
-			$scope.data = "Request failed";
-		});
 	};
 	
 	$scope.resturantByName = function(){
@@ -157,7 +142,7 @@ app.controller("itemsCtrl", function($scope, $http) {
 	
 });
 
-app.controller("loginCtrl", function($scope, $http){
+app.controller("loginCtrl", function($rootScope, $scope, $http){
 	
 	$scope.loginUser = function(){
 	
@@ -221,7 +206,18 @@ app.controller("signupCtrl", function($scope, $http){
 });
 
 app.controller("adminCtrl", function($scope, $http){
-	
+
+	$scope.init = function(){
+		 
+		$scope.fetchID();
+		$scope.restShow=false; 
+		$scope.userShow=false; 
+		$scope.itemShow = false; 
+		
+		$scope.userBool=true;
+		$scope.updtStr='Update';
+	};
+
 	$scope.saveRestaurant = function() {
 
 		$http({
@@ -240,7 +236,8 @@ app.controller("adminCtrl", function($scope, $http){
 	};
 
 	$scope.saveItem = function() {
-		
+		$scope.item.restaurantId = $scope.r;
+		console.log($scope.item);
 		$http({
 			method : 'POST',
 			url : 'http://localhost:9080//admin/addItem',
@@ -301,4 +298,106 @@ app.controller("adminCtrl", function($scope, $http){
 		});
 	};
 
+	$scope.fetchID = function() {
+		
+		$http({
+			method : 'GET',
+			url : 'http://localhost:9080/restaurant/getAll'
+		}).success(function(data, status) {
+			$scope.status = status;
+			console.log(data);
+			$scope.restID = data;
+		}).error(function(data, status) {
+			console.log(status);
+			$scope.status = status;
+			$scope.data = "Request failed";
+		});
+	};
+	
+	$scope.showAllUsers = function(){
+		$http({
+			method : 'GET',
+			url : 'http://localhost:9080/user/getAll'
+		}).success(function(data, status) {
+			$scope.status = status;
+			console.log(data);
+			$scope.userID = data;
+		}).error(function(data, status) {
+			console.log(status);
+			$scope.status = status;
+			$scope.data = "Request failed";
+		});
+	};
+
+	$scope.showAllItems = function(){
+		$http({
+			method : 'GET',
+			url : 'http://localhost:9080/restaurant/getAllItems'
+		}).success(function(data, status) {
+			$scope.status = status;
+			console.log(data);
+			$scope.itemID = data;
+		}).error(function(data, status) {
+			console.log(status);
+			$scope.status = status;
+			$scope.data = "Request failed";
+		});
+	};
+	$scope.deleteRest = function(x){
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteRestaurant',
+			headers: { 'Content-Type': 'application/json' },
+			data:x
+		}).success(function(data, status) {
+			$scope.status = status;
+		}).error(function(data, status) {
+			$scope.status = status;
+		});
+		$scope.fetchID();
+	};
+	$scope.updateRest = function(x,y){
+		$scope.deleteRest(x);
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/addRestaurant',
+			headers: { 'Content-Type': 'application/json' },
+			data:y
+		}).success(function(data, status) {
+			$scope.status = status;
+		}).error(function(data, status) {
+			$scope.status = status;
+			
+		});
+		$scope.fetchID();
+	};
+
+	$scope.deleteUsr = function(x){
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteUser',
+			headers: { 'Content-Type': 'application/json' },
+			data:x
+		}).success(function(data, status) {
+			
+		}).error(function(data, status) {
+			$scope.status = status;
+		});
+		$scope.showAllUsers();
+	};
+
+	$scope.updateUser = function(x,y){
+		$scope.deleteUsr(x);
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/user/add',
+			headers: { 'Content-Type': 'application/json' },
+			data:y
+		}).success(function(data, status) {
+			
+		}).error(function(data, status) {
+		});
+		$scope.showAllUsers();
+	};
+	
 });

@@ -1,5 +1,6 @@
-<div class="container well" style="z-index: 10;margin-top: 40px; position: relative;" ng-init="restaurant.likeCount=0">
-    <h2>Hello Admin</h2>
+<div class="container" style="z-index: 0;margin-top: 40px; position: relative;" ng-init="init();restaurant.likeCount=0; restBool=true;itemBool=true;">
+    <div class="row well container">
+        <h2>Hello Admin</h2>
     <div class="col-lg-4">
         <h3>Restauant Operations</h3>
         <h4>Add</h4>
@@ -40,6 +41,8 @@
                     <td><button ng-click="saveRestaurant()" class="btn btn-success" style="margin-top: 10px;width: 150px;">Save Restauant</button></td>
                 </tr>
             </table>
+            </form>
+
             <p ng-bind="saveRestaurantMessage"></p>
             <h4>Delete By ID</h4>
             <form novalidate>
@@ -63,7 +66,15 @@
                 <table cellpadding="100">
                     <tr>
                         <td>Restauant ID</td>
+                        <!---
                         <td><input type="text" ng-model="item.restaurantId"></td>
+                        -->
+                        <td>
+                                <select ng-model="r" class="form-control">
+                                    <option ng-repeat="x in restID">{{x.id}}</option> 
+                                	
+                                </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Name</td>
@@ -116,4 +127,90 @@
                     </form>
                     <p ng-bind="deleteUserMessage"></p>
             </div>
+        </div>
+        <div class="row well container">
+            <h3>Master Control</h3>
+            <div class="col-lg-4">
+            <h4>Restauants</h4>
+            <button class="btn btn-primary" ng-click="restShow=!restShow; fetchID();">Edit</button>
+            </div>
+            <div class="col-lg-4">
+            <h4>Items</h4>
+            <button class="btn btn-primary" ng-click="itemShow=!itemShow; showAllItems();">Edit</button>
+            </div>
+            <div class="col-lg-4">
+            <h4>Users</h4>
+            <button class="btn btn-primary" ng-click="userShow=!userShow; showAllUsers();">Edit</button>
+            </div>
+            <div class="col-lg-12">
+            <table cellpadding="100" class="table table-strip table-hover" ng-show="restShow" ng-init="updtStr='Update';" style="width: 1000px;">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Address</th>
+                    <th>Description</th>
+                    <th>Contact</th>
+                    <th>Website</th>
+                </tr>
+                <tr ng-repeat="x in restID">
+                    <td><input ng-value="x.id" disabled></td>
+                    <td><input  ng-show="!restBool" ng-model="newRest.name">{{x.name}}</td>
+                    <td><input  ng-show="!restBool" ng-model="newRest.city">{{x.city}}</td>
+                    <td><input ng-show="!restBool" ng-model="newRest.address">{{x.address}} </td>
+                    <td><input  ng-show="!restBool" ng-model="newRest.description">{{x.description}}</td>
+                    <td><input  ng-show="!restBool" ng-model="newRest.contact">{{x.contact}}</td>
+                    <td><input  ng-show="!restBool" ng-model="newRest.website">{{x.website}}</td>
+                    <td><button class="btn btn-success" ng-click="restBool=!restBool;">Edit</button></td>
+                    <td><button class="btn btn-primary" ng-click="updateRest(x,newRest);restBool=!restBool; fetchID()" ng-show="!restBool">Update</button></td>
+                    <td><button class="btn btn-danger" ng-click="deleteRest(x)">Delete</button></td>
+                </tr>
+            </table>
+            
+            
+                    <table cellpadding="100" class="table table-strip table-hover" ng-show="userShow">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Password</th>
+                            <th>Address</th>
+                            <th>Landmark</th>
+                            <th>PinCode</th>
+                            <th>Type</th>
+                        </tr>
+                        <tr ng-repeat="x in userID">
+                            <td><input ng-show="!userBool" disabled>{{x.id}}</td>
+                            <td><input ng-show="!userBool" ng-model="newUser.id">{{x.name}}</td>
+                            <td><input  ng-show="!userBool" type="password" ng-model="newUser.password">Secret</td>
+                            <td><input  ng-show="!userBool" ng-model="newUser.address">{{x.address}}</td>
+                            <td><input  ng-show="!userBool" ng-model="newUser.landmark">{{x.landmark}}</td>
+                            <td><input  ng-show="!userBool" ng-model="newUser.pincode">{{x.pincode}}</td>
+                            <td><input ng-show="!userBool" ng-model="newUser.type">{{x.type}} </td>
+                            <td><button class="btn btn-success" ng-click="userBool=!userBool;">Edit</button></td>
+                            <td><button class="btn btn-primary" ng-click="updateUser(x,newUser);" ng-show="!userBool">Update</button></td>
+                            <td><button class="btn btn-danger" ng-click="deleteUsr(x)">Delete</button></td>
+                        </tr>
+                    </table>
+                    <table cellpadding="100" class="table table-strip table-hover" ng-show="itemShow">
+                            <tr>
+                                <th>ID</th>
+                                <th>Restauant Id</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr ng-repeat="x in itemID">
+                                <td><input  ng-show="!itemBool" disabled>{{x.id}}<td>
+                                <td><input  ng-show="!itemBool" ng-model="newItem.restaurantId">{{x.restaurantId}}<td>
+                                <td><input ng-show="!itemBool" ng-model="newItem.name">{{x.name}} <td>
+                                <td><input  ng-show="!itemBool" ng-model="newItem.description">{{x.description}}<td>
+                                <td><input {{x.price}} ng-show="!itemBool" ng-model="newItem.price"><td>
+                                <td><button class="btn btn-success" ng-click="itemBool=!itemBool;">Edit</button></td>
+                                <td><button class="btn btn-primary" ng-click="updateItem(x,newitem);" ng-show="!itemBool">Update</button></td>
+                                <td><button class="btn btn-danger" ng-click="deleteItem(x)">Delete</button></td>
+                            </tr>
+                        </table>
+                    </div>
+        </div>
 </div>
+            

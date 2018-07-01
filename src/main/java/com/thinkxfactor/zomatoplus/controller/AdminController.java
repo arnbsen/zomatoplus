@@ -52,7 +52,8 @@ public class AdminController {
 	}
 	
 	@PostMapping("/deleteItem")
-	public void deleteItem(@RequestBody Restaurant r) {
+	public void deleteItem(@RequestBody Item r) {
 		itemRepository.deleteById(r.getId());
 	}
+	
 }
