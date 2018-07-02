@@ -240,7 +240,7 @@ app.controller("adminCtrl", function($scope, $http){
 		console.log($scope.item);
 		$http({
 			method : 'POST',
-			url : 'http://localhost:9080//admin/addItem',
+			url : 'http://localhost:9080/admin/addItem',
 			headers: { 'Content-Type': 'application/json' },
 			data:$scope.item
 		}).success(function(data, status) {
@@ -356,8 +356,7 @@ app.controller("adminCtrl", function($scope, $http){
 		});
 		$scope.fetchID();
 	};
-	$scope.updateRest = function(x,y){
-		$scope.deleteRest(x);
+	$scope.updateRest = function(y){
 		$http({
 			method : 'POST',
 			url : 'http://localhost:9080/admin/addRestaurant',
@@ -370,6 +369,7 @@ app.controller("adminCtrl", function($scope, $http){
 			
 		});
 		$scope.fetchID();
+
 	};
 
 	$scope.deleteUsr = function(x){
@@ -386,8 +386,7 @@ app.controller("adminCtrl", function($scope, $http){
 		$scope.showAllUsers();
 	};
 
-	$scope.updateUser = function(x,y){
-		$scope.deleteUsr(x);
+	$scope.updateUser = function(y){
 		$http({
 			method : 'POST',
 			url : 'http://localhost:9080/user/add',
@@ -399,5 +398,33 @@ app.controller("adminCtrl", function($scope, $http){
 		});
 		$scope.showAllUsers();
 	};
-	
+
+	$scope.deleteItem = function(x){
+		console.log(x);
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/deleteItem',
+			headers: { 'Content-Type': 'application/json' },
+			data:x
+		}).success(function(data, status) {
+			
+		}).error(function(data, status) {
+			$scope.status = status;
+		});
+	};
+	$scope.updateItem = function(x) {
+		console.log(x);
+		$http({
+			method : 'POST',
+			url : 'http://localhost:9080/admin/addItem',
+			headers: { 'Content-Type': 'application/json' },
+			data:$scope.itm
+		}).success(function(data, status) {
+			
+			$scope.saveItemMessage = "Added Item with ID:" + data.id;
+		}).error(function(data, status) {
+			$scope.status = status;
+			$scope.saveItemMessage = "Request failed";
+		});
+	};
 });
